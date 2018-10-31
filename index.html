@@ -1,13 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>Mr. Blanchet's Pong Game</title>
-
-        <!-- Include the processing.js library -->
-        <script src="https://cdn.jsdelivr.net/processing.js/1.4.8/processing.min.js"></script> 
-
-        <!-- Include your processing sketch -->
-        <script src="game.js"></script>
+        <title>Mr. Blanchet's Games</title>
 
         <!-- Some style to make it look better -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
@@ -16,25 +10,9 @@
     <body>
         <section class="section">
             <div class="container">
-                <h1 class="title">Mr. Blanchet's Pong Game</h1>
-                
-                <!-- Your processing sketch -->
-                <canvas id="myCanvas"></canvas>
-                <script>        
-                    // Get the canvas that Processing-js will use
-                    var canvas = document.getElementById("myCanvas"); 
-                    // Pass the function sketchProc (defined in game.js) to Processing's constructor.
-                    var processingInstance = new Processing(canvas, sketchProc); 
-                </script>
-            </div>
-            
-            <!-- Put a space between the canvas and the about section -->
-            <br>
-
-            <!-- An area to have -->
-            <div class="container">
-                <h3 class="subtitle">About this Sketch</h3>
-                This is a pong game
+                <h1 class="title">Mr. Blanchet's Games</h1>
+                <p><a href="pong-game/index.html">Pong Game</a></p>
+                <p><a href="whack-a-mole/whack-a-mole.html">Whack A Mole</a></p>
             </div>
         </section>
     </body>
