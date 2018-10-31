@@ -5,7 +5,7 @@
         <title>Mr. Blanchet's Treasure Hunt</title>
 
         <!-- Include the processing.js library -->
-        <script src="https://cdn.jsdelivr.net/processing.js/1.4.8/processing.min.js"></script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js"></script>
 
         <!-- Include your processing sketch -->
         <script src="treasure-hunt.js"></script>
@@ -20,13 +20,7 @@
                 <h1 class="title">Mr. Blanchet's Treasure Hunt</h1>
                 
                 <!-- Your processing sketch -->
-                <canvas id="myCanvas"></canvas>
-                <script>        
-                    // Get the canvas that Processing-js will use
-                    var canvas = document.getElementById("myCanvas"); 
-                    // Pass the function sketchProc (defined in game.js) to Processing's constructor.
-                    var processingInstance = new Processing(canvas, sketchProc); 
-                </script>
+                <div id="sketchContainer"></div>
             </div>
             
             <!-- Put a space between the canvas and the about section -->
