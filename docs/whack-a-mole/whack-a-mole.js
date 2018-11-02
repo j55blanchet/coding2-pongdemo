@@ -3,49 +3,48 @@ var sketchProc = function (processingInstance) {
 
         size(400, 400);
 
+        // ES6 way of creating object blueprints
+        class Mole {
 
-        // We're defining the constructor function for a Mole
-        var Mole = function (x, y, radius) {
+            // ES6 way to define a function
+            // to create a new Mole instance
+            constructor(x, y, radius) {
+                // Save the values we received as parameters into the object we're creating
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+            }
 
-            // Save the values we received as parameters into the object we're creating
-            this.x = x;
-            this.y = y;
-            this.radius = radius;
-        };
+            // Defining a draw function for moles
+            draw() {
+                // Body of mole
+                noStroke();
+                fill(140, 89, 8);
+                ellipse(this.x,
+                    this.y,
+                    this.radius * 2,
+                    this.radius * 2);
 
-        // Add method to prototype
-        Mole.prototype.draw = function () {
+                // Left eye
+                fill(222, 222, 222);
+                ellipse(this.x - this.radius / 3,
+                    this.y - this.radius / 3,
+                    this.radius / 5,
+                    this.radius / 2);
 
-            // Body of mole
-            noStroke();
-            fill(140, 89, 8);
-            ellipse(this.x,
-                this.y,
-                this.radius * 2,
-                this.radius * 2);
+                // Right eye
+                fill(222, 222, 222);
+                ellipse(this.x + this.radius / 3,
+                    this.y - this.radius / 3,
+                    this.radius / 5,
+                    this.radius / 2);
+            }
 
-            // Left eye
-            fill(222, 222, 222);
-            ellipse(this.x - this.radius / 3,
-                this.y - this.radius / 3,
-                this.radius / 5,
-                this.radius / 2);
-
-            // Right eye
-            fill(222, 222, 222);
-            ellipse(this.x + this.radius / 3,
-                this.y - this.radius / 3,
-                this.radius / 5,
-                this.radius / 2);
-        };
-
-        Mole.prototype.containsPoint = function (pointX, pointY) {
-            // return true if the point is within the mole
-            // return false if the point isn't within the mole
-            var distance = dist(pointX, pointY, this.x, this.y);
-            return distance <= this.radius;
-        };
-
+            containsPoint(pointX, pointY) {
+                return dist(pointX, pointY, this.x, this.y) <= this.radius;
+            }
+        }
+        
         // A list of all the moles
         var moles = [];
 

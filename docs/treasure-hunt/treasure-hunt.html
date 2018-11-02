@@ -4,10 +4,13 @@
         <!-- Text shown on tab title in chrome -->
         <title>Mr. Blanchet's Treasure Hunt</title>
 
-        <!-- Include the processing.js library -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js"></script>
 
-        <!-- Include your processing sketch -->
+        <!-- Include the p5.js library -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js"></script>
+    
+        <!-- Include your p5.js sketch -->
+        <script src="grid.js"></script>
+        <script src="boy.js"></script>
         <script src="treasure-hunt.js"></script>
 
         <!-- Some style to make it look better -->
@@ -19,8 +22,8 @@
             <div class="container">
                 <h1 class="title">Mr. Blanchet's Treasure Hunt</h1>
                 
+                <div id="sketch-holder"></div>
                 <!-- Your processing sketch -->
-                <div id="sketchContainer"></div>
             </div>
             
             <!-- Put a space between the canvas and the about section -->
@@ -28,9 +31,10 @@
 
             <!-- An area to have -->
             <div class="container">
+                
                 <h3 class="subtitle">About this Game</h3>
-                This is a game where you search for treasure.
-
+                <p>This game is our first usage of the p5.js library.</p>  
+                <p>This is a game where you search for treasure.</p>
                 <h3>Instructions</h3>
                 TBD
             </div>
