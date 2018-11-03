@@ -17,7 +17,7 @@ var setup = function() {
 
 var draw = function() {
     background(240);
-    grid.draw();
+    grid.drawGrid();
     boy.draw();
 };
 

@@ -6,28 +6,22 @@ let runningFramesPerSecond = 3
 let idleFrameModulo = 60 / idleFramesPerSecond,
     runningFramesModulo = 60 / runningFramesPerSecond;
 
-const DIRECTION = Object.freeze({
-    UP: Symbol("UP"),
-    DOWN: Symbol("DOWN"),
-    LEFT: Symbol("LEFT"),
-    RIGHT: Symbol("RIGHT")
-});
 
 class Boy {
     constructor(grid, col, row) {
         this.grid = grid;
         this.col = col;
         this.row = row;
-
         this.idleImgIndex = 0;
         this.runningImgIndex = 0;
         this.lastDirection = DIRECTION.RIGHT;
     }
 
     draw() {
-        imageMode(CENTER);
+        imageMode(CENTER)
 
-        let img = idleImages[this.idleImgIndex];
+        let img = idleImages[this.idleImgIndex]
+        this.grid.drawImageOnGrid(img, this.col, this.row, this.lastDirection)
 
         if (frameCount % idleFrameModulo === 0) {
             this.idleImgIndex = (this.idleImgIndex + 1) % idleImages.length
@@ -35,31 +29,6 @@ class Boy {
         if (frameCount % runningFramesModulo === 0) {
             this.runningImgIndex = (this.runningImgIndex + 1) % runningImages.length
         }
-        
-        let aspectRatio = img.width / img.height;
-        let drawWidth = min(grid.cellWidth, 
-                            grid.cellHeight * aspectRatio);
-
-        let drawHeight = min(grid.cellHeight,
-                             grid.cellWidth / aspectRatio);                            
-
-        push();
-        translate(grid.cellCenterX(this.col), grid.cellCenterY(this.row));
-        if (this.lastDirection === DIRECTION.LEFT) {
-            scale(-1, 1);
-        }
-        if (this.lastDirection === DIRECTION.UP) {
-            angleMode(DEGREES)
-            rotate(-90)
-        }
-        if (this.lastDirection === DIRECTION.DOWN) {
-            angleMode(DEGREES)
-            rotate(90)
-        }
-        image(img, 
-              0, 0,
-              drawWidth, drawHeight);
-        pop();
     }
 
     moveRight() {

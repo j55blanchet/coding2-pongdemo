@@ -40,11 +40,11 @@ class Grid {
     drawGrid() {
         strokeWeight(1);
         stroke(125);
-        for(var c = 0; c < this.cols; c++) {
+        for(var c = 0; c <= this.cols; c++) {
             line(c * this.cellWidth, 0, c * this.cellWidth, height);
         }
 
-        for(var r = 0; r < this.rows; r++) {
+        for(var r = 0; r <= this.rows; r++) {
             line(0, this.cellHeight * r,
                  width, this.cellHeight * r);
         }
