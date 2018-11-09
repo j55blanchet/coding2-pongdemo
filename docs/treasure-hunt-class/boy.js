@@ -14,6 +14,40 @@ class Boy {
         this.grid.drawImageOnGrid(this.img, this.col, this.row, this.direction)
     }
 
+    nextPosition(moveDirection) {
+
+        switch(moveDirection) {
+        case DIRECTION.UP:
+            return { col: this.col, 
+                     row: this.row - 1}
+        case DIRECTION.DOWN:
+            return { col: this.col,
+                     row: this.row + 1}
+        case DIRECTION.LEFT:
+            return { col: this.col - 1,
+                     row: this.row }
+        case DIRECTION.RIGHT:
+            return { col: this.col + 1,
+                     row: this.row }
+        }
+    }
+    move(moveDirection) {
+
+        switch (moveDirection) {
+            case DIRECTION.UP:
+                this.moveUp();
+                break;
+            case DIRECTION.DOWN:
+                this.moveDown();
+                break;
+            case DIRECTION.LEFT:
+                this.moveLeft();
+                break;
+            case DIRECTION.RIGHT:
+                this.moveRight();
+                break;
+        }
+    }
     moveRight() {
         if (this.col < grid.cols - 1) {
             this.col += 1

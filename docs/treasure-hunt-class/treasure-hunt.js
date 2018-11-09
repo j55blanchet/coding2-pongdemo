@@ -3,10 +3,10 @@
 var boy;
 var grid;
 
+var gemCount = 0;
+
 // Store everything besides the player
 var gameElements = [];
-
-
 
 // Gets called before game is loaded.
 // Use it to load images & other resources
@@ -47,27 +47,47 @@ var draw = function() {
 
     // Always draw 
     boy.draw();
+    
+    fill(10);
+    text("Gems: " + gemCount, 10, 10);
 }
 
 function keyTyped() {
+
+    var direction;
     if (key === 'w') {
-        for(let element of gameElements) {
-            if (element.col === boy.col &&
-                element.row === boy.row - 1){
-                
-                // The player is going to run into this element
-                return;
-            }
-        }
-        boy.moveUp()
+        direction = DIRECTION.UP;
     }
     if (key === 's') {
-        boy.moveDown()
+        direction = DIRECTION.DOWN;
     }
     if (key === 'a') {
-        boy.moveLeft()
+        direction = DIRECTION.LEFT;
     }
     if (key === 'd') {
-        boy.moveRight();
+        direction = DIRECTION.RIGHT;
+    }
+
+    if (direction) {
+        
+        let nextSpot = boy.nextPosition(direction);
+        console.log("moving to:", nextSpot);
+
+        for(var i = gameElements.length - 1; i >= 0; i--) {
+
+            var element = gameElements[i];
+            if(element.col === nextSpot.col &&
+               element.row === nextSpot.row) {
+
+                // We're going to hit this object
+                if (element instanceof Gem) {
+                    // Remove the gem
+                    gameElements.splice(i, 1);
+                    gemCount ++;
+                }
+            }
+        }
+
+        boy.move(direction);
     }
 }
