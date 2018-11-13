@@ -7,6 +7,8 @@ const GEMTYPE = Object.freeze({
     5: Symbol("5")
 });
 
+let collectionSound;
+
 class Gem {
     constructor(grid, col, row) {
         this.grid = grid;
@@ -18,9 +20,19 @@ class Gem {
         this.img =loadImage(`assets/gem/gem${gemId}.png`);
 
         this.direction = DIRECTION.RIGHT;
+
+        if (!collectionSound) {
+            collectionSound = loadSound('assets/gem/gemCollection.wav');
+        }
     }
 
     draw() {
         this.grid.drawImageOnGrid(this.img, this.col, this.row, this.direction)
+    }
+
+    playCollectionSound() {
+        if (collectionSound) {
+            collectionSound.play();
+        }
     }
 }

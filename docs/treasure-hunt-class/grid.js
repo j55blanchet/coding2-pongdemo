@@ -18,10 +18,10 @@ class Grid {
     // as if it were a variable instead of a function.
     //   You use someGrid.cellWidth rather then someGrid.cellWidth()
     get cellWidth() {
-        return width /this.cols;
+        return min(width, height) / this.cols;
     }
     get cellHeight() {
-        return height / this.cols;
+        return min(width, height) / this.rows;
     }
 
     // Pass in the column index & this function returns the center 
@@ -41,12 +41,12 @@ class Grid {
         strokeWeight(1);
         stroke(125);
         for(var c = 0; c <= this.cols; c++) {
-            line(c * this.cellWidth, 0, c * this.cellWidth, height);
+            line(c * this.cellWidth, 0, c * this.cellWidth, this.cellHeight * this.rows);
         }
 
         for(var r = 0; r <= this.rows; r++) {
             line(0, this.cellHeight * r,
-                 width, this.cellHeight * r);
+                 this.cellWidth * this.cols, this.cellHeight * r);
         }
     }
 

@@ -26,9 +26,7 @@ var preload = function() {
 // Before the draw function ever gets called, setup gets called
 //   After resources are loaded, sets up the game
 var setup = function() {
-
-    var canvas = createCanvas(400, 400);
-    canvas.parent('sketch-holder');
+    createCanvas(windowWidth, windowHeight);
 }
 
 //  Gets called over and over again as the
@@ -69,25 +67,38 @@ function keyTyped() {
     }
 
     if (direction) {
-        
-        let nextSpot = boy.nextPosition(direction);
-        console.log("moving to:", nextSpot);
-
-        for(var i = gameElements.length - 1; i >= 0; i--) {
-
-            var element = gameElements[i];
-            if(element.col === nextSpot.col &&
-               element.row === nextSpot.row) {
-
-                // We're going to hit this object
-                if (element instanceof Gem) {
-                    // Remove the gem
-                    gameElements.splice(i, 1);
-                    gemCount ++;
-                }
-            }
-        }
-
-        boy.move(direction);
+        attemptMoveCharacter(direction);
     }
 }
+
+function attemptMoveCharacter(direction) {
+    if (!direction) {
+        return;
+    }
+
+    let nextSpot = boy.nextPosition(direction);
+    console.log("moving to:", nextSpot);
+
+    for(var i = gameElements.length - 1; i >= 0; i--) {
+
+        var element = gameElements[i];
+        if(element.col === nextSpot.col &&
+            element.row === nextSpot.row) {
+
+            // We're going to hit this object
+            if (element instanceof Gem) {
+                // Remove the gem
+                element.playCollectionSound();
+                gameElements.splice(i, 1);
+                gemCount ++;
+            }
+        }
+    }
+
+    boy.move(direction);
+}
+
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+  }
