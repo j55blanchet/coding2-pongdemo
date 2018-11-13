@@ -38,8 +38,8 @@ class Grid {
 
     // Draws the grid on screen
     drawGrid() {
-        strokeWeight(1);
-        stroke(125);
+        strokeWeight(2);
+        stroke(155);
         for(var c = 0; c <= this.cols; c++) {
             line(c * this.cellWidth, 0, c * this.cellWidth, this.cellHeight * this.rows);
         }
@@ -73,10 +73,16 @@ class Grid {
             angleMode(DEGREES)
             rotate(90)
         }
+        if (Number.isFinite(direction)) {
+            let diagonal = dist(0, 0, drawWidth, drawHeight)
+            scale(min(grid.cellWidth, grid.cellHeight) / diagonal);
+            angleMode(DEGREES);
+            rotate(direction);
+        }
         imageMode(CENTER);
-        image(img, 
-              0, 0,
-              drawWidth, drawHeight);
+        image(img,
+                0, 0,
+                drawWidth, drawHeight);
         pop();
     }
 }

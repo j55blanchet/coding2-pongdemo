@@ -1,9 +1,18 @@
+
+
+
 class Boy {
     constructor(grid, col, row) {
         this.grid = grid;
         this.col = col;
         this.row = row;
-        this.img =loadImage('assets/boy/idle/frame-1.png');
+
+        this.idleImgs = [
+            loadImage('assets/boy/idle/frame-1.png'),
+            loadImage('assets/boy/idle/frame-2.png')
+        ];
+        this.curIdleImg = 0;
+        
         this.moveSound = loadSound('assets/boy/footsteps.wav');
         this.direction = DIRECTION.RIGHT;
 
@@ -11,7 +20,18 @@ class Boy {
     }
 
     draw() {
-        this.grid.drawImageOnGrid(this.img, this.col, this.row, this.direction)
+
+        // to change the image three times a second,
+        // rotate the curIdleImg every 20 frames
+        if (frameCount % 20 === 0) {
+            this.curIdleImg += 1;
+            if (this.curIdleImg >= this.idleImgs.length) {
+                this.curIdleImg = 0;
+            }
+        }
+
+        let img = this.idleImgs[this.curIdleImg];
+        this.grid.drawImageOnGrid(img, this.col, this.row, this.direction)
     }
 
     nextPosition(moveDirection) {

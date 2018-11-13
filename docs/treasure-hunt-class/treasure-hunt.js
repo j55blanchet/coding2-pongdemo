@@ -14,6 +14,7 @@ var preload = function() {
 
     grid = new Grid(10, 10);
     boy = new Boy(grid, 0, 0);
+    gameElements.push(boy);
 
     // Make 5 gems and put them into the game
     for(let i = 0; i < 5; i++) {
@@ -21,19 +22,27 @@ var preload = function() {
                                 chooseRandomInteger(10))
         gameElements.push(gem);
     }
+
+    for(let i = 0; i < 10; i++) {
+        let barrier = new Barrier(grid, chooseRandomInteger(10),
+                                        chooseRandomInteger(10))
+        gameElements.push(barrier);
+    }
 }
 
 // Before the draw function ever gets called, setup gets called
 //   After resources are loaded, sets up the game
 var setup = function() {
     createCanvas(windowWidth, windowHeight);
+    windowResized();
+    frameRate(60);
 }
 
 //  Gets called over and over again as the
 // game draws new frames
 var draw = function() {
 
-    background(255);
+    background(60, 140, 74);
 
     // Draw the grid first, then the boy on top of it
     grid.drawGrid();
@@ -42,9 +51,6 @@ var draw = function() {
         var element = gameElements[i];
         element.draw();
     }
-
-    // Always draw 
-    boy.draw();
     
     fill(10);
     text("Gems: " + gemCount, 10, 10);
@@ -77,7 +83,7 @@ function attemptMoveCharacter(direction) {
     }
 
     let nextSpot = boy.nextPosition(direction);
-    console.log("moving to:", nextSpot);
+    let preventMove = false;
 
     for(var i = gameElements.length - 1; i >= 0; i--) {
 
@@ -92,13 +98,20 @@ function attemptMoveCharacter(direction) {
                 gameElements.splice(i, 1);
                 gemCount ++;
             }
+
+            if (element instanceof Barrier) {
+                preventMove = true;
+            }
         }
     }
 
-    boy.move(direction);
+    if (!preventMove) {
+        boy.move(direction);
+    }
 }
 
 
 function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
+    let size = min(windowWidth, windowHeight);
+    resizeCanvas(size, size);
   }

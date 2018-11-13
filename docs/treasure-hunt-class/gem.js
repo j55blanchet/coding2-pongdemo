@@ -14,12 +14,11 @@ class Gem {
         this.grid = grid;
         this.col = col;
         this.row = row;
+        this.ang = random(360);
 
         let gemId = Math.round(Math.random() * 4);
         this.gemType = GEMTYPE[gemId];
         this.img =loadImage(`assets/gem/gem${gemId}.png`);
-
-        this.direction = DIRECTION.RIGHT;
 
         if (!collectionSound) {
             collectionSound = loadSound('assets/gem/gemCollection.wav');
@@ -27,7 +26,9 @@ class Gem {
     }
 
     draw() {
-        this.grid.drawImageOnGrid(this.img, this.col, this.row, this.direction)
+        this.grid.drawImageOnGrid(this.img, this.col, this.row, this.ang)
+        this.ang += 30 * 1 / 60;
+        this.ang %= 360;
     }
 
     playCollectionSound() {
