@@ -14,9 +14,9 @@ class Gem {
         this.grid = grid;
         this.col = col;
         this.row = row;
-        this.ang = random(360);
+        this.ang = Math.random() * 360;
 
-        let gemId = Math.round(Math.random() * 4);
+        let gemId = Math.floor(Math.random() * 4) + 1;
         this.gemType = GEMTYPE[gemId];
         this.img =loadImage(`assets/gem/gem${gemId}.png`);
 

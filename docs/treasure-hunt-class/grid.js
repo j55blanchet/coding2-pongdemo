@@ -6,6 +6,8 @@ const DIRECTION = Object.freeze({
     RIGHT: Symbol("RIGHT")
 });
 
+const GRID_BUFFER = 10;
+
 class Grid {
 
     // Make a new grid with a specified number of rows and colums
@@ -18,35 +20,39 @@ class Grid {
     // as if it were a variable instead of a function.
     //   You use someGrid.cellWidth rather then someGrid.cellWidth()
     get cellWidth() {
-        return min(width, height) / this.cols;
+        return (min(width, height) - 2*GRID_BUFFER) / this.cols;
     }
     get cellHeight() {
-        return min(width, height) / this.rows;
+        return (min(width, height) - 2*GRID_BUFFER) / this.rows;
     }
 
     // Pass in the column index & this function returns the center 
     // x coordinate for that column
     cellCenterX(col) {
-        return this.cellWidth * 1/2 + this.cellWidth * col
+        return GRID_BUFFER + this.cellWidth * 1/2 + this.cellWidth * col
     }
 
     // Pass in the row index & this function returns the center y
     // coordinate for that column
     cellCenterY(row) {
-        return  this.cellHeight * 1/2 + this.cellHeight * row
+        return  GRID_BUFFER + this.cellHeight * 1/2 + this.cellHeight * row
     }
 
     // Draws the grid on screen
     drawGrid() {
         strokeWeight(2);
         stroke(155);
+
+        // Vertical Grid Lines
         for(var c = 0; c <= this.cols; c++) {
-            line(c * this.cellWidth, 0, c * this.cellWidth, this.cellHeight * this.rows);
+            line(c * this.cellWidth + GRID_BUFFER, GRID_BUFFER,
+                 c * this.cellWidth + GRID_BUFFER,  this.cellHeight * this.rows + GRID_BUFFER);
         }
 
+        // Horizontal Grid Lines
         for(var r = 0; r <= this.rows; r++) {
-            line(0, this.cellHeight * r,
-                 this.cellWidth * this.cols, this.cellHeight * r);
+            line(GRID_BUFFER, this.cellHeight * r + GRID_BUFFER,
+                 this.cellWidth * this.cols + GRID_BUFFER, this.cellHeight * r + GRID_BUFFER);
         }
     }
 

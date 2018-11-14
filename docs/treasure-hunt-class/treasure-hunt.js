@@ -7,6 +7,7 @@ var gemCount = 0;
 
 // Store everything besides the player
 var gameElements = [];
+var levels;
 
 // Gets called before game is loaded.
 // Use it to load images & other resources
@@ -14,20 +15,10 @@ var preload = function() {
 
     grid = new Grid(10, 10);
     boy = new Boy(grid, 0, 0);
-    gameElements.push(boy);
+ 
+    levels = makeLevels();
+    loadLevel(levels[0])
 
-    // Make 5 gems and put them into the game
-    for(let i = 0; i < 5; i++) {
-        let gem = new Gem(grid, chooseRandomInteger(10), 
-                                chooseRandomInteger(10))
-        gameElements.push(gem);
-    }
-
-    for(let i = 0; i < 10; i++) {
-        let barrier = new Barrier(grid, chooseRandomInteger(10),
-                                        chooseRandomInteger(10))
-        gameElements.push(barrier);
-    }
 }
 
 // Before the draw function ever gets called, setup gets called
@@ -100,6 +91,7 @@ function attemptMoveCharacter(direction) {
             }
 
             if (element instanceof Barrier) {
+                // Stop player from moving
                 preventMove = true;
             }
         }
@@ -108,6 +100,16 @@ function attemptMoveCharacter(direction) {
     if (!preventMove) {
         boy.move(direction);
     }
+}
+
+function loadLevel(level) {
+    this.gameElements = level.gameElements();
+    for(let elem of this.gameElements) {
+        elem.grid = grid;
+    }
+    this.boy.col = level.playerCol;
+    this.boy.row = level.playerRow;
+    this.gameElements.push(this.boy);
 }
 
 
