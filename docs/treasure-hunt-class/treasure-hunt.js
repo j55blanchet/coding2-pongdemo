@@ -1,13 +1,18 @@
 
 
+const gameFrameRate = 60;
+const monsterMovesPerSecond = 2;
+const monsterKeyFrames = Math.round(gameFrameRate / monsterMovesPerSecond);
+
 var boy;
 var grid;
 
 var gemCount = 0;
-
+var gemsRemaining = 0;
 // Store everything besides the player
 var gameElements = [];
 var levels;
+var lvlIndex = 1;
 
 // Gets called before game is loaded.
 // Use it to load images & other resources
@@ -17,7 +22,7 @@ var preload = function() {
     boy = new Boy(grid, 0, 0);
  
     levels = makeLevels();
-    loadLevel(levels[0])
+    loadLevel(levels[lvlIndex])
 
 }
 
@@ -26,7 +31,7 @@ var preload = function() {
 var setup = function() {
     createCanvas(windowWidth, windowHeight);
     windowResized();
-    frameRate(60);
+    frameRate(gameFrameRate);
 }
 
 //  Gets called over and over again as the
@@ -41,6 +46,14 @@ var draw = function() {
     for (var i = 0; i < gameElements.length; i++) {
         var element = gameElements[i];
         element.draw();
+    }
+
+    if (frameCount % monsterKeyFrames === 0) {
+        for(element of gameElements) {
+            if (element instanceof Monster) {
+                element.moveTowards(boy.col, boy.row);
+            }
+        }
     }
     
     fill(10);
@@ -68,6 +81,19 @@ function keyTyped() {
     }
 }
 
+function isPlayerCollidingWithMonster() {
+    for(element of gameElements) {
+        if (element instanceof Monster) {
+            if (element.col === boy.col &&
+                element.row === player.row) {
+                
+                    return true
+            }
+        }
+    }
+    return false
+}
+
 function attemptMoveCharacter(direction) {
     if (!direction) {
         return;
@@ -88,6 +114,14 @@ function attemptMoveCharacter(direction) {
                 element.playCollectionSound();
                 gameElements.splice(i, 1);
                 gemCount ++;
+                gemsRemaining --;
+                if (gemsRemaining === 0 && lvlIndex < levels.length -1) {
+                    lvlIndex += 1;
+                    loadLevel(levels[lvlIndex])
+                    console.log(`Finished Level ${lvlIndex}. Moving to Level ${lvlIndex + 1}`)
+
+                }
+                
             }
 
             if (element instanceof Barrier) {
@@ -103,13 +137,14 @@ function attemptMoveCharacter(direction) {
 }
 
 function loadLevel(level) {
-    this.gameElements = level.gameElements();
+    gameElements = level.gameElements();
     for(let elem of this.gameElements) {
         elem.grid = grid;
     }
-    this.boy.col = level.playerCol;
-    this.boy.row = level.playerRow;
-    this.gameElements.push(this.boy);
+    boy.col = level.playerCol;
+    boy.row = level.playerRow;
+    gameElements.push(this.boy);
+    gemsRemaining = level.gems.length;
 }
 
 
