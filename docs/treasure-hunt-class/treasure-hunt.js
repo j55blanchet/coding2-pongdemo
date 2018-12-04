@@ -11,7 +11,7 @@ var gemCount = 0;
 var gemsRemaining = 0;
 // Store everything besides the player
 var gameElements = [];
-var levels;
+var levelMakers;
 var lvlIndex = 1;
 
 // Gets called before game is loaded.
@@ -21,8 +21,8 @@ var preload = function() {
     grid = new Grid(10, 10);
     boy = new Boy(grid, 0, 0);
  
-    levels = makeLevels();
-    loadLevel(levels[lvlIndex])
+    levelMakers = levelConstructors;
+    loadLevel(levelMakers[lvlIndex])
 
 }
 
@@ -55,6 +55,11 @@ var draw = function() {
             }
         }
     }
+
+    if (isPlayerCollidingWithMonster()) {
+        // reload level
+        loadLevel(levelMakers[lvlIndex]);
+    }
     
     fill(10);
     text("Gems: " + gemCount, 10, 10);
@@ -85,7 +90,7 @@ function isPlayerCollidingWithMonster() {
     for(element of gameElements) {
         if (element instanceof Monster) {
             if (element.col === boy.col &&
-                element.row === player.row) {
+                element.row === boy.row) {
                 
                     return true
             }
@@ -115,9 +120,9 @@ function attemptMoveCharacter(direction) {
                 gameElements.splice(i, 1);
                 gemCount ++;
                 gemsRemaining --;
-                if (gemsRemaining === 0 && lvlIndex < levels.length -1) {
+                if (gemsRemaining === 0 && lvlIndex < levelMakers.length -1) {
                     lvlIndex += 1;
-                    loadLevel(levels[lvlIndex])
+                    loadLevel(levelMakers[lvlIndex])
                     console.log(`Finished Level ${lvlIndex}. Moving to Level ${lvlIndex + 1}`)
 
                 }
@@ -136,7 +141,8 @@ function attemptMoveCharacter(direction) {
     }
 }
 
-function loadLevel(level) {
+function loadLevel(levelMaker) {
+    let level = levelMaker();
     gameElements = level.gameElements();
     for(let elem of this.gameElements) {
         elem.grid = grid;
