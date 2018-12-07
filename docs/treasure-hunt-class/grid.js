@@ -38,6 +38,16 @@ class Grid {
         return  GRID_BUFFER + this.cellHeight * 1/2 + this.cellHeight * row
     }
 
+    pointIsWithinCell(px, py, col, row) {
+        let cx = this.cellCenterX(col);
+        let cy = this.cellCenterY(row);
+        let hw = this.cellWidth / 2;
+        let hh = this.cellHeight / 2;
+
+        return px > cx - hw && px < cx + hw &&
+               py > cy - hh && py < cy + hh;
+    }
+
     // Draws the grid on screen
     drawGrid() {
         strokeWeight(2);

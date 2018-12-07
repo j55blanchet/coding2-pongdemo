@@ -12,7 +12,7 @@ var gemsRemaining = 0;
 // Store everything besides the player
 var gameElements = [];
 var levelMakers;
-var lvlIndex = 0;
+var lvlIndex = 1;
 
 var bullets = [];
 
@@ -40,13 +40,6 @@ var setup = function() {
 // game draws new frames
 var draw = function() {
 
-    if (frameCount % 60 === 0) {
-        let boyX = grid.cellCenterX(boy.col);
-        let boyY = grid.cellCenterY(boy.row);
-        let bul = new Bullet(0, 0, boyX, boyY);
-        bullets.push(bul);
-    }
-
     background(60, 140, 74);
 
     // Draw the grid first, then the boy on top of it
@@ -72,7 +65,8 @@ var draw = function() {
 
     for (var i = bullets.length - 1; i >= 0; i--){
         let bullet = bullets[i];
-        if (dist(bullet.x, bullet.y, boy.x, boy.y) < 5) {
+        if (grid.pointIsWithinCell(bullet.x, bullet.y, boy.col, boy.row)) {
+
             // Bullet hit player
             loadLevel(levelMakers[lvlIndex]);
             return;
@@ -83,6 +77,14 @@ var draw = function() {
         // reload level
         loadLevel(levelMakers[lvlIndex]);
     }
+
+    gameElements
+    .filter((elem) => elem instanceof Monster)
+    .forEach((monst) => {
+        if (Math.random() < 0.01) {
+            bullets.push(monst.makeBulletTowards(boy.col, boy.row));
+        }
+    });
     
     fill(10);
     text("Gems: " + gemCount, 10, 10);

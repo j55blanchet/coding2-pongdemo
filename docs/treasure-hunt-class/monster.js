@@ -6,6 +6,7 @@ class Monster {
         this.grid = grid;
         this.col = col;
         this.row = row;
+        this.lastFireTime = new Date(0);
 
         this.img = loadImage('assets/monster/spiky-monster.png');
         this.direction = DIRECTION.RIGHT;
@@ -13,6 +14,14 @@ class Monster {
 
     draw() {
         this.grid.drawImageOnGrid(this.img, this.col, this.row, this.direction)
+    }
+
+    makeBulletTowards(col, row) {
+        this.lastFireTime = new Date();
+        return new Bullet(this.grid.cellCenterX(this.col),
+                           this.grid.cellCenterY(this.row),
+                           this.grid.cellCenterX(col),
+                           this.grid.cellCenterY(row))
     }
 
     nextPosition(moveDirection) {
