@@ -27,7 +27,7 @@ function enmy(col, row) {
     return new Monster(null, col, row);
 }
 
-let makeLevelOne = () => {
+function makeLevelOne() {
     let lvl1Barriers = [
         barr(1, 0), barr(1, 1), barr(1, 2), barr(1, 4), barr(1, 5), barr(1, 6), barr(1, 7), barr(1, 8), barr(1, 9),
         barr(2, 4),
@@ -47,7 +47,7 @@ let makeLevelOne = () => {
     return new Level(lvl1Barriers, lvl1Gems, lvl1Enemies, 0, 0);
 }
 
-let makeLevelTwo = () => {
+function makeLevelTwo() {
     let lvl2Barriers = [];
     for(var c = 1; c < 9; c++) { lvl2Barriers.push(barr(c, 1))
                                  lvl2Barriers.push(barr(c, 8))}

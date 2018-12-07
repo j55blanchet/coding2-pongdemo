@@ -12,7 +12,9 @@ var gemsRemaining = 0;
 // Store everything besides the player
 var gameElements = [];
 var levelMakers;
-var lvlIndex = 1;
+var lvlIndex = 0;
+
+var bullets = [];
 
 // Gets called before game is loaded.
 // Use it to load images & other resources
@@ -38,6 +40,13 @@ var setup = function() {
 // game draws new frames
 var draw = function() {
 
+    if (frameCount % 60 === 0) {
+        let boyX = grid.cellCenterX(boy.col);
+        let boyY = grid.cellCenterY(boy.row);
+        let bul = new Bullet(0, 0, boyX, boyY);
+        bullets.push(bul);
+    }
+
     background(60, 140, 74);
 
     // Draw the grid first, then the boy on top of it
@@ -53,6 +62,20 @@ var draw = function() {
             if (element instanceof Monster) {
                 element.moveTowards(boy.col, boy.row);
             }
+        }
+    }
+
+    bullets.forEach((bul) => {
+        bul.move();
+        bul.draw();
+    })
+
+    for (var i = bullets.length - 1; i >= 0; i--){
+        let bullet = bullets[i];
+        if (dist(bullet.x, bullet.y, boy.x, boy.y) < 5) {
+            // Bullet hit player
+            loadLevel(levelMakers[lvlIndex]);
+            return;
         }
     }
 
@@ -143,6 +166,7 @@ function attemptMoveCharacter(direction) {
 
 function loadLevel(levelMaker) {
     let level = levelMaker();
+    bullets = [];
     gameElements = level.gameElements();
     for(let elem of this.gameElements) {
         elem.grid = grid;
