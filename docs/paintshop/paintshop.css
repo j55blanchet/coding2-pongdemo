@@ -40,6 +40,21 @@ html, body {
     box-shadow: 2px 2px 2px;
 
     cursor: pointer;
+    text-align: center;
+}
+input[type="color"] {
+	-webkit-appearance: none;
+    border: none;
+    padding: 0;
+    border-radius: 16px;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+    border-radius: 16px;
+}
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 16px;
 }
 
 .box:hover {
