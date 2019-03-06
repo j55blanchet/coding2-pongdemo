@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="paintshop.css">
+
+    <title>Paintshop</title>
+
+    <!-- Include Library Files -->
+    <script src="p5.min.js"></script>
+    <script src="p5.dom.min.js"></script>
+
+    <!-- Include our sketch file -->
+    <script src="paintshop.js"></script>
+</head>
+<body>
+
+
+
+    <div id="bottomTray">
+
+        <h3>Tools Tray</h3>
+
+        <a class="box red" onclick="stroke(238, 0, 0)"></a>
+        <a class="box orange" onclick="stroke(238, 108, 0)"></a>
+        <a class="box blue" onclick="stroke(0, 143, 143)"></a>
+
+        <br>
+
+        <a class="box purple" onclick="stroke(115, 0, 172)"></a>
+        <a class="box green" onclick="stroke(0, 190, 0)"></a>
+        <a class="box white" onclick="stroke(255)"></a>
+
+        <br>
+        <input type="range" min="1" max="20" value="1" oninput="strokeWeight(this.value)">
+    </div>
+</body>
+</html>
