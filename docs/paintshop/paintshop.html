@@ -36,9 +36,12 @@
         <a class="box green" onclick="setBrush('green')"></a>
         <input type="color" class="box" oninput="setCustomColor(this.value)">
         <br>
-        <a class="box" onclick="save()">
-            <i class="fas fa-save fa-2x"></i>
-        </a>
+        <div id="buttonRow">
+            <a class="box" onclick="save()">
+                <i class="fas fa-save fa-2x"></i>
+            </a>
+            
+        </div>
         <br>
         <input type="range" min="1" max="20" value="1" oninput="strokeWeight(this.value)">
     </div>

@@ -1,9 +1,4 @@
 
-
-
-
-
-
 let redColor
 let orangeColor;
 let blueColor;
@@ -24,6 +19,10 @@ let canvasObject;
 function setup() {
     canvasObject = createCanvas(windowWidth, windowHeight);
     background(255);
+
+    const paintTray = document.getElementById('buttonRow');
+    const loadImgInput = createFileInput(loadFile);
+    loadImgInput.parent(paintTray);
 }
 
 function draw() {
@@ -59,12 +58,30 @@ function setBrush(color) {
 }
 
 function setCustomColor(colorString) {
-    let c  = color(colorString);
+    const c  = color(colorString);
     stroke(c);
 }
 
 function save() {
     saveCanvas(canvasObject, 'myImage', 'png');
+}
+
+function loadFile(file) {
+
+    if (file.type === 'image') {
+        const data = file.data;
+        console.log('User uploaded image: ', file);
+
+        loadImage(file.data, img => {
+            noCanvas();
+            createCanvas(img.width, img.height);
+            image(img, 0, 0);
+        });
+
+        return;
+    }
+
+    console.error("User uploaded file we don't know what to do with:", file);
 }
 
 // // disabled for now because we don't
