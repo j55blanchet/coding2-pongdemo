@@ -67,6 +67,21 @@ function save() {
     saveCanvas(canvasObject, 'myImage', 'png');
 }
 
+
+function adjustBrush(rangeValue) {
+
+    strokeWeight(rangeValue);
+    window.event.stopPropagation();
+}
+
+function ondocumentReady() {
+    let x = document.getElementById('bottomTray')
+}
+
+function newSketch() {
+    
+}
+
 // // disabled for now because we don't
 // // want to erase the painting (need to
 // // figure out how to work around this)

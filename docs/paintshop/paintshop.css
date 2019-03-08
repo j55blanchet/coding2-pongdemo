@@ -8,12 +8,16 @@ html, body {
     height: 100%;
     width: 100%;
     overflow: hidden;
+
+    background: lightblue;
 }
 
 
 #bottomTray {
+    display: flex;
+    flex-direction: column;
     position: absolute;
-    background: rgba(225, 225, 225, 0.8);
+    background: gray;
     padding: 24px;
 
     bottom: 1em;
@@ -31,17 +35,40 @@ html, body {
     font-size: 20pt;
 }
 
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
 .box {
     display: inline-block;
     width: 45px;
     height: 45px;
 
     border-radius: 16px;
-    box-shadow: 2px 2px 2px;
+    
 
+    display: flex;
     cursor: pointer;
     text-align: center;
+    vertical-align: middle;
+
+    margin: 5px 3px;
+
+    box-shadow: 0px 0px 2px black;
+    transition: box-shadow 0.2s;
 }
+.box:hover {
+    box-shadow: 0px 0px 6px rgba(255, 255, 255, 0.5);
+}
+
+.box i {
+    display: block;
+    margin: auto; /* Important */ 
+    text-align: center; 
+    color: lightskyblue;
+}
+
 input[type="color"] {
 	-webkit-appearance: none;
     border: none;
@@ -55,10 +82,6 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 input[type="color"]::-webkit-color-swatch {
     border: none;
     border-radius: 16px;
-}
-
-.box:hover {
-    box-shadow: 0px 0px 2px;
 }
 
 /* Color Scheme: 
@@ -81,4 +104,28 @@ input[type="color"]::-webkit-color-swatch {
 }
 .box.purple {
     background: rgb(115, 0, 172);
+}
+.box.button {
+    background: darkslategrey;
+}
+
+dialog[open] {
+    animation: appear .15s cubic-bezier(0, 1.8, 1, 1.8);
+}
+dialog::backdrop {
+    background: black;
+}
+dialog.actions {
+    display: flex;
+    justify-content: space-around;
+}
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateX(-3rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
