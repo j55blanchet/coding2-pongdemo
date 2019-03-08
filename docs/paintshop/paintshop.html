@@ -43,7 +43,7 @@
             <a class="box button" onclick="save()">
                 <i class="fas fa-save fa-2x"></i>
             </a>
-            <a class="box button" onclick="newSketch()">
+            <a class="box button" onclick="openDialog('newSketchDialog')">
                 <i class="fas fa-plus fa-2x"></i>
             </a>
         </div>
@@ -52,19 +52,39 @@
         <input type="range" min="1" max="20" value="1" oninput="adjustBrush(this.value);">
     </div>
 
-    <dialog id="newSketch" class="modal">
+    <dialog id="newSketchDialog" class="modal">
         <h3>New Sketch</h3>
         <div class="actions">
-            <button class="cancel">Cancel</button>
-            <button>From Image</button>
-            <button>From Scratch</button>
+            <button class="diag-close">Cancel</button>
+            <button onclick="switchToDialog('loadNewImageDialog')">From Image</button>
+            <button onclick="switchToDialog('newImageSetResolutionDialog')">From Scratch</button>
         </div>
     </dialog>
 
-    <script>
-    if (window.ondocumentReady) {
-        window.ondocumentReady();
-    }
-    </script>
+    <dialog id="loadNewImageDialog">
+        <h3>Load New Image</h3>
+        <div class="actions">
+            <button class="diag-close">Cancel</button>
+            <!-- JS Will add the file picker -->
+        </div> 
+    </dialog>
+
+    <dialog id="newImageSetResolutionDialog">
+        <form onsubmit="createNewImage(event);">
+        <h3>Set Resolution</h3>
+        <div class="row">
+            <label for="width">Width</label>
+            <input required type="number" name="width">
+        </div>
+        <div class="row">
+            <label for="height">Height</label>
+            <input required type="number" name="height">
+        </div>
+        <div class="actions">
+            <button type="button" class="diag-close">Cancel</button>
+            <button type="submit">Create</button>
+        </div>
+        </form>
+    </dialog>
 </body>
 </html>
