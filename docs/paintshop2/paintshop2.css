@@ -1,0 +1,34 @@
+
+
+body {
+    font-family: sans-serif;
+}
+
+.onTop {
+    position: relative;
+    /* z-index: 2; */
+    /* background: red; */
+}
+
+dialog {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    background: white;
+    /* z-index: -1; */
+}
+
+dialog button {
+    border-radius: 0;
+    background: #C88;
+    color: white;
+    border: none;
+    padding: 1em;
+}
+
+#openFile {
+    background: #8C8;   
+}
+#loadFile {
+    background: #88C;
+}

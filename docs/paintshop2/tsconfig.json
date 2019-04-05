@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "system",
+        "noImplicitAny": true,
+        "sourceMap": true,
+        "outFile": "paintshop-combined.js",
+        "sourceRoot": "src"
+    },
+    "include": [
+        "*.ts", 
+        "index.d.ts", 
+        "global.d.ts", 
+        "src/*.ts"
+    ]
+}
