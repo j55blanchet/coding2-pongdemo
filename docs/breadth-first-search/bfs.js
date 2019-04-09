@@ -35,13 +35,14 @@ function mouseClicked() {
         if (v.containsPoint(mouseX, mouseY)) {
             
             if(v === selectedV) {
-                console.log()
-                selecttedV = null;
+                console.log("Reclicking on the already selected vertex");
+                selectedV = null;
                 return;
             }
 
             if (!selectedV) {
-                v = selectedV;
+                console.log("Selecting new vertex (no preivous selection)")
+                selectedV = v;
                 return;
             }
 
@@ -55,7 +56,9 @@ function mouseClicked() {
 
     let v = new Vertex(mouseX, mouseY);
     allVertices.push(v);
-    v.addConnectionTo(selectedV);
+    if (selectedV) {
+        v.addConnectionTo(selectedV);
+    }
     selectedV = v;
     
 }
