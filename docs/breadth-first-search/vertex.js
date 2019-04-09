@@ -1,7 +1,7 @@
 
 /// <reference path="global.d.ts" />
 
-const VERTEX_DIAMETER = 30;
+const VERTEX_DIAMETER = 20;
 
 class Vertex {
 
@@ -16,31 +16,46 @@ class Vertex {
         return dist(this.x, this.y, x, y) < this.radius;
     }
 
-    addConnectionTo(otherVertex) {
-        this.connectedVertexes.push(otherVertex);
-        otherVertex.connectedVertexes.push(this);
-    }
-
-    isConnectedTo(otherVertex) {
-        if (otherVertex === this) {
-            return true;
+    addConnectionTo(otherVertexI) {
+        if (typeof(otherVertexI) !== typeof(4)) {
+            debugger;
+            throw "undefined otherVertexI";
         }
-        return this.connectedVertexes.includes(otherVertex);
+        this.connectedVertexes.push(otherVertexI);
     }
 
-    draw(isSelected) {
+    isConnectedTo(otherVertexI) {
+        return this.connectedVertexes.includes(otherVertexI);
+    }
+
+    drawConnections(vertexList) {
+
+        for (let otherVertexI of this.connectedVertexes) {
+            let otherVertex = vertexList[otherVertexI]
+            if (!otherVertex) {
+                debugger;
+                throw "Null other vertex i: " + otherVertexI;
+            }
+            stroke(240);
+            strokeWeight(4);
+            line(this.x, this.y, otherVertex.x, otherVertex.y);
+
+            stroke(40);
+            strokeWeight(2);
+            line(this.x, this.y, otherVertex.x, otherVertex.y);
+        }
+    }
+
+    drawSelf(isSelected) {
         if (isSelected) {
             fill(30, 150, 150);
         } else {
-            fill(30);
+            fill(240);
         }
-        
         noStroke();
         ellipse(this.x, this.y, this.radius * 2, this.radius * 2);
 
-        stroke(30, 50);
-        for (let otherVertex of this.connectedVertexes) {
-            line(this.x, this.y, otherVertex.x, otherVertex.y);
-        }
+        fill(30);
+        ellipse(this.x, this.y, this.radius, this.radius);
     }
 }

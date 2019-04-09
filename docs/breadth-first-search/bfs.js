@@ -1,64 +1,94 @@
 /// <reference path="global.d.ts" />
 
 let canvas;
+let winchMap
 let allVertices = [];
-let selectedV = null;
+let selectedVIndex = null;
+
+function preload() {
+    canvas = createCanvas(800, 600);
+    background(210);
+    fill(30);
+    text("Loading...", 50, 20);
+    winchMap = loadImage("WinchMap.png");
+}
 
 function setup() {
-    canvas = createCanvas(800, 600);
+    resizeCanvas(winchMap.width, winchMap.height);
     background(255);    
 
     frameRate(10);
 
-    let a = new Vertex(300, 200);
-    let b = new Vertex(200, 100);
+    let printVertexDataBtn = createButton("Print Vertex Map");
+    printVertexDataBtn.mousePressed(printVertexData);
 
-    selectedV = b;
 
-    allVertices.push(a);
-    allVertices.push(b);
 
-    a.addConnectionTo(b);
+    // let a = new Vertex(300, 200);
+    // let b = new Vertex(200, 100);
+
+    // selectedV = b;
+
+    // allVertices.push(a);
+    // allVertices.push(b);
+
+    // a.addConnectionTo(b);
 }
 
 function draw() {
     background(213, 245, 222);
-    for(let v of allVertices) {
-        v.draw(selectedV === v);
+    image(winchMap, 0, 0);
+    for(let i = 0; i < allVertices.length; i++) {   
+        allVertices[i].drawConnections(allVertices);
+    }
+    for(let i = 0; i < allVertices.length; i++) {   
+        allVertices[i].drawSelf(selectedVIndex === i);
     }
 }
 
 function mouseClicked() {
 
-    for(let v of allVertices) {
+    for(let i = 0; i < allVertices.length; i++) {
+        let v = allVertices[i];
         
         if (v.containsPoint(mouseX, mouseY)) {
             
-            if(v === selectedV) {
+            if(i === selectedVIndex) {
                 console.log("Reclicking on the already selected vertex");
-                selectedV = null;
+                selectedVIndex = null;
                 return;
             }
 
-            if (!selectedV) {
+            if (selectedVIndex === null) {
                 console.log("Selecting new vertex (no preivous selection)")
-                selectedV = v;
+                selectedVIndex = i;
                 return;
             }
 
-            if (!selectedV.isConnectedTo(v)) {
-                selectedV.addConnectionTo(v);
+            const selectedV = allVertices[selectedVIndex];
+            if (!selectedV.isConnectedTo(i)) {
+                selectedV.addConnectionTo(i);
+                allVertices[i].addConnectionTo(selectedVIndex);
             }
-            selectedV = v;
+            selectedVIndex = i;
+            console.log("Adding connection between two existing vertices");
             return;
         }
     }
 
     let v = new Vertex(mouseX, mouseY);
     allVertices.push(v);
-    if (selectedV) {
-        v.addConnectionTo(selectedV);
+    let i = allVertices.length - 1;
+
+    if (selectedVIndex !== null) {
+        allVertices[selectedVIndex].addConnectionTo(i)
+        v.addConnectionTo(selectedVIndex);
     }
-    selectedV = v;
-    
+    selectedVIndex = i;
+}
+
+function printVertexData() {
+    let jsonData = JSON.stringify(allVertices)
+    createP(jsonData);
+    console.log(jsonData);
 }
