@@ -58,4 +58,8 @@ class Vertex {
         fill(30);
         ellipse(this.x, this.y, this.radius, this.radius);
     }
+
+    isValid() {
+        return true;
+    }
 }

@@ -19,9 +19,11 @@ function setup() {
 
     frameRate(10);
 
-    let printVertexDataBtn = createButton("Print Vertex Map");
-    printVertexDataBtn.mousePressed(printVertexData);
+    let printVertexDataBtn = createButton("Save Graph Data");
+    printVertexDataBtn.mousePressed(saveVertexData);
 
+    createElement("br");
+    let loadMapDataBtn = createFileInput(loadVertexData);
 
 
     // let a = new Vertex(300, 200);
@@ -39,10 +41,15 @@ function draw() {
     background(213, 245, 222);
     image(winchMap, 0, 0);
     for(let i = 0; i < allVertices.length; i++) {   
-        allVertices[i].drawConnections(allVertices);
+        const v = allVertices[i];
+        v.drawConnections(allVertices);
     }
-    for(let i = 0; i < allVertices.length; i++) {   
-        allVertices[i].drawSelf(selectedVIndex === i);
+    for(let i = 0; i < allVertices.length; i++) {
+
+        const isSelected = selectedVIndex === i,
+              v = allVertices[i];
+
+        v.drawSelf(isSelected);
     }
 }
 
@@ -87,8 +94,33 @@ function mouseClicked() {
     selectedVIndex = i;
 }
 
-function printVertexData() {
-    let jsonData = JSON.stringify(allVertices)
-    createP(jsonData);
-    console.log(jsonData);
+function saveVertexData() {
+    saveJSON(allVertices, "mapData.json", false);
+}
+
+function loadVertexData(f) {
+    if (f.type !== "application" || 
+        f.subtype !== "json") {
+        console.error("Invalid File Type!");
+        return;
+    }
+
+    loadJSON(f.data, (res) => {
+        if (!Array.isArray(res)) {
+            console.error("Invalid file format");
+            return;
+        }
+
+        console.log(res);
+        let vArray = [];
+        for(let i = 0; i < res.length; i++) {
+            const vRaw = res[i];
+            const v = Object.assign(new Vertex(), vRaw);
+            if (v.isValid()) {
+                vArray.push(v);
+            }
+        }
+
+        allVertices = vArray;
+    })
 }
