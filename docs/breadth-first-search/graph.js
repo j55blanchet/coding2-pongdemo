@@ -30,8 +30,14 @@ class Graph {
         }
     }
 
-    isConnectionBetween(v, ov) {
-
+    hasConnectionBetween(v, ov) {
+        const vi = this.vertices.indexOf(v);
+        const ovi = this.vertices.indexOf(ov);
+        if ((vi === 0 || vi) && (ovi === 0 || ovi)) {
+            return v.isConnectedTo(ovi) && ov.isConnectedTo(vi);
+        } else {
+            return false;
+        }
     }
     addConnectionBetween(v, ov) {
         const vi = this.vertices.indexOf(v);
@@ -54,5 +60,4 @@ class Graph {
             v.drawSelf(isSelected);
         }
     }
-
 }
