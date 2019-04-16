@@ -5,7 +5,8 @@ const VERTEX_DIAMETER = 20;
 
 class Vertex {
 
-    constructor(x, y) {
+    constructor(graph, x, y) {
+        this.graph = graph;
         this.x = x;
         this.y = y;
         this.connectedVertexes = [];
