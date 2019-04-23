@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Breadth First Search</title>
 
+    <script src="Queue.js"></script>
     <script src="p5.min.js"></script>
     <script src="p5.dom.min.js"></script>
     <script src="vertex.js"></script>
@@ -13,6 +14,8 @@
     <script src="bfs.js"></script>
     <script src="bfs-controls.js"></script>
     <script src="bfs-mapCreation.js"></script>
+    <script src="winchMap-searching.js"></script>
+    <script src="breadthFirstSearch.js"></script>
 
     <link rel="stylesheet" href="bfs.css">
 </head>
@@ -30,6 +33,7 @@
         <div class="controlColumn" id="controls2">
             <h3>Map Operations</h3>
             <button onclick="saveVertexData()">Save Map</button>
+            <button onclick="loadGraph(new Graph())">Clear Map</button>
             <h5>Load Map</h5>
         </div>
         <div class="controlColumn"></div>

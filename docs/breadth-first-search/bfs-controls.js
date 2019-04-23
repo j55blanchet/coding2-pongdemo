@@ -22,7 +22,7 @@ function mapModeChanged(setting) {
 }
 
 function saveVertexData() {
-    saveJSON(allVertices, "mapData.json", false);
+    saveJSON(graph, "mapData.json", false);
 }
 
 function loadVertexData(f) {
@@ -33,21 +33,22 @@ function loadVertexData(f) {
     }
 
     loadJSON(f.data, (res) => {
-        if (!Array.isArray(res)) {
+        
+        if (typeof(res) !== "object") {
             console.error("Invalid file format");
             return;
         }
-
-        console.log(res);
-        let vArray = [];
-        for(let i = 0; i < res.length; i++) {
-            const vRaw = res[i];
-            const v = Object.assign(new Vertex(), vRaw);
-            if (v.isValid()) {
-                vArray.push(v);
-            }
+        let vList = [];
+        for(const vJson of res.vertices) {
+            const v = new Vertex();
+            Object.assign(v, vJson);
+            vList.push(v);
         }
-
-        allVertices = vArray;
+        const connections = res.connections;
+        const g = new Graph()
+        g.connections = res.connections;
+        g.vertices = vList;
+        
+        loadGraph(g);
     })
 }

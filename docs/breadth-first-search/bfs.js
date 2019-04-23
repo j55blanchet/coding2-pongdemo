@@ -8,14 +8,24 @@ let canvas;
 let graph;
 let winchMapImg
 
+let mapCreator;
+let mapSearcher;
+
+function loadGraph(g) {
+    graph = g;
+    mapCreator = new MapCreator(g);
+    mapSearcher = new MapSearcher(g);
+}
+
 function preload() {
-    canvas = createCanvas(800, 600);
-    graph = new Graph();
     
+    canvas = createCanvas(800, 600);
     background(210);
     fill(30);
     text("Loading...", 50, 20);
     winchMapImg = loadImage("WinchMap.png");
+
+    loadGraph(new Graph());
 }
 
 function setup() {
@@ -28,9 +38,13 @@ function setup() {
 }
 
 function draw() {
-    background(213, 245, 222);
     image(winchMapImg, 0, 0);
     graph.draw();
+    if (mapMode === MAP_CREATION_MODE) {
+        mapCreator.draw();
+    } else if (mapMode === PATHFIND_MODE) {
+        mapSearcher.draw();
+    }
 }
 
 function mouseClicked() {
@@ -42,6 +56,10 @@ function mouseClicked() {
     }
 
     if (mapMode === MAP_CREATION_MODE) {
-        MapCreation.processClick(graph, mouseX, mouseY);
+        mapCreator.processClick(graph, mouseX, mouseY);
+    } else if (mapMode === PATHFIND_MODE) {
+        mapSearcher.processClick(graph, mouseX, mouseY);
+    } else {
+        throw `Map Mode '${mapMode}' not recognized`
     }
 }

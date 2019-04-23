@@ -1,43 +1,54 @@
 
-class MapCreation {
+class MapCreator {
+    
+    constructor(graph) {
+        this.graph = graph;
+        this.selectedVId = null;
+    }
 
-    static processClick(graph, x, y) {
+    processClick(graph, x, y) {
         
         const clickedVertex = graph.vertexAt(x, y);
-        const selectedVertex = graph.getSelectedVertex();
+        const selectedVertex = graph.getVertex(this.selectedVId);
         
         if (!clickedVertex) {
-            MapCreation.addNewVertex(graph, x, y);
+            this.addNewVertex(graph, x, y);
             return;
         }
 
         if(clickedVertex === selectedVertex) {
             console.log("Reclicking on the already selected vertex");
-            graph.selectVertex(null);
+            this.selectedVId = null;
             return;
         }
 
-        if (selectedVertex === null) {
+        if (!selectedVertex) {
             console.log("Selecting new vertex (no preivous selection)")
-            graph.selectVertex(clickedVertex);
+            this.selectedVId = clickedVertex.id;
             return;
         }
 
-        if (!graph.isConnectionBetween(clickedVertex, selectedVertex)) {
+        if (!graph.hasConnectionBetween(clickedVertex, selectedVertex)) {
             graph.addConnectionBetween(clickedVertex, selectedVertex);
             console.log("Adding connection between two existing vertices");
         }
-        graph.selectVertex(clickedVertex);
+        this.selectedVId = clickedVertex.id;
     }
 
-    static addNewVertex(graph, x, y) {
-        let v = new Vertex(graph, x, y);
-        graph.addVertex(v);
+    addNewVertex(graph, x, y) {
+         let v = graph.addVertex(x, y);
 
-        const selectedVertex = graph.getSelectedVertex();
+        const selectedVertex = graph.getVertex(this.selectedVId);
         if (selectedVertex) {
             graph.addConnectionBetween(v, selectedVertex);
         }
-        graph.selectVertex(v);
+        this.selectedVId = v.id;
+    }
+
+    draw(){
+        if (this.selectedVId !== null) {
+            const v = this.graph.getVertex(this.selectedVId);
+            v.draw(color(30, 150, 150));
+        }
     }
 }
