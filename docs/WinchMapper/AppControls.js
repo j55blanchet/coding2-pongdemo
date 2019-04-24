@@ -45,10 +45,11 @@ function loadVertexData(f) {
             vList.push(v);
         }
         const connections = res.connections;
-        const g = new Graph()
-        g.connections = res.connections;
-        g.vertices = vList;
         
-        loadGraph(g);
+        const loadedGraph = new Graph()
+        loadedGraph.connections = res.connections;
+        loadedGraph.vertices = vList;
+        
+        loadGraph(loadedGraph);
     })
 }
