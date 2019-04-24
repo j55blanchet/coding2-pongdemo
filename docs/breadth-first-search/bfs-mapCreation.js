@@ -10,7 +10,7 @@ class MapCreator {
         
         const clickedVertex = graph.vertexAt(x, y);
         const selectedVertex = graph.getVertex(this.selectedVId);
-        
+
         if (!clickedVertex) {
             this.addNewVertex(graph, x, y);
             return;

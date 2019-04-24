@@ -17,6 +17,10 @@ function loadGraph(g) {
     mapSearcher = new MapSearcher(g);
 }
 
+function resetBFS() {
+    mapSearcher.reset();
+}
+
 function preload() {
     
     canvas = createCanvas(800, 600);
@@ -38,11 +42,14 @@ function setup() {
 }
 
 function draw() {
+
     image(winchMapImg, 0, 0);
     graph.draw();
+    
     if (mapMode === MAP_CREATION_MODE) {
         mapCreator.draw();
     } else if (mapMode === PATHFIND_MODE) {
+        mapSearcher.processHover(mouseX, mouseY);
         mapSearcher.draw();
     }
 }
@@ -62,4 +69,12 @@ function mouseClicked() {
     } else {
         throw `Map Mode '${mapMode}' not recognized`
     }
+}
+
+
+function drawArrow(sx, sy, dx, dy) {
+    stroke(255, 0, 0);
+    strokeWeight(2);
+    fill(255, 0, 0);
+    libDrawArrow(sx, sy, dx, dy, 6);
 }

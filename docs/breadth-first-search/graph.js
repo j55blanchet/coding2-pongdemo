@@ -1,4 +1,5 @@
 class Graph {
+    
     constructor() {
         
         this.vertices = [];
@@ -25,7 +26,8 @@ class Graph {
     }
 
     hasConnectionBetween(v, ov) {
-        return this.connections[v.id] && this.connections[ov.id] &&
+        return this.connections[v.id] && 
+               this.connections[ov.id] &&
                this.connections[v.id].indexOf(ov.id) >= 0 &&
                this.connections[ov.id].indexOf(v.id) >= 0;
     }
