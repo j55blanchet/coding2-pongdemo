@@ -20,7 +20,7 @@ class MapSearcher {
         }
 
         this.destVertex = clickedVertex;
-        this.bfs = new BreadthFirstSearch(graph, this.destVertex);
+        this.bfs = new BreadthFirstSearcher(graph, this.destVertex);
         while(!this.bfs.isComplete()) {
             this.bfs.continueSearch();
         }

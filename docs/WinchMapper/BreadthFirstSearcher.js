@@ -11,7 +11,7 @@ let libDrawArrow = function(x1, y1, x2, y2, offset) {
     pop();
 }
 
-class BreadthFirstSearch {
+class BreadthFirstSearcher {
     constructor(g, origin) {
         this.graph = graph;
         this.backPaths = {};
