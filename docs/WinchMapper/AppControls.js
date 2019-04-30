@@ -1,7 +1,7 @@
 let mapModeLabel;
 
 function setupControls() {
-    
+
     let column2Container = document.querySelector('#controls2');
     let loadMapDataBtn = createFileInput(loadVertexData);
     loadMapDataBtn.parent(column2Container);
@@ -26,30 +26,16 @@ function saveVertexData() {
 }
 
 function loadVertexData(f) {
-    if (f.type !== "application" || 
+    if (f.type !== "application" ||
         f.subtype !== "json") {
         console.error("Invalid File Type!");
         return;
     }
 
     loadJSON(f.data, (res) => {
-        
-        if (typeof(res) !== "object") {
-            console.error("Invalid file format");
-            return;
-        }
-        let vList = [];
-        for(const vJson of res.vertices) {
-            const v = new Vertex();
-            Object.assign(v, vJson);
-            vList.push(v);
-        }
-        const connections = res.connections;
-        
-        const loadedGraph = new Graph()
-        loadedGraph.connections = res.connections;
-        loadedGraph.vertices = vList;
-        
-        loadGraph(loadedGraph);
+
+        let newGraph = new Graph();
+        newGraph.loadJson(res);
+        loadGraph(newGraph);
     })
 }

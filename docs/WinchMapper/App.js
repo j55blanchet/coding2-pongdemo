@@ -29,7 +29,9 @@ function preload() {
     text("Loading...", 50, 20);
     winchMapImg = loadImage("WinchMap.png");
 
-    loadGraph(new Graph());
+    let g = new Graph();
+    g.loadJson(MAP_DEFAULT_JSON);
+    loadGraph(g);
 }
 
 function setup() {

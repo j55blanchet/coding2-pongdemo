@@ -81,4 +81,19 @@ class Graph {
         strokeWeight(2);
         line(v.x, v.y, ov.x, ov.y);
     }
+
+    loadJson(json){
+        if (typeof (json) !== "object") {
+            console.error("Invalid file format");
+            return;
+        }
+        
+        for (const vJson of json.vertices) {
+            const v = new Vertex();
+            Object.assign(v, vJson);
+            this.vertices.push(v);
+        }
+
+        this.connections = json.connections;
+    }
 }
