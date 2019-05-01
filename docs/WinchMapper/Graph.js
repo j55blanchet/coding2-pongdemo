@@ -82,18 +82,18 @@ class Graph {
         line(v.x, v.y, ov.x, ov.y);
     }
 
-    loadJson(json){
-        if (typeof (json) !== "object") {
+    loadJson(graphData){
+        if (typeof (graphData) !== "object") {
             console.error("Invalid file format");
             return;
         }
         
-        for (const vJson of json.vertices) {
-            const v = new Vertex();
-            Object.assign(v, vJson);
+        for (const vertexData of graphData.vertices) {
+            const v = new Vertex(vertexData.x, vertexData.y, vertexData.id);
+            // Object.assign(v, vJson);
             this.vertices.push(v);
         }
 
-        this.connections = json.connections;
+        this.connections = graphData.connections;
     }
 }
