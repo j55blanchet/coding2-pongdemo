@@ -38,6 +38,9 @@ function loadVertexData(f) {
 
         let newGraph = new Graph();
         newGraph.loadJson(res);
-        loadGraph(newGraph);
+        switchToGraph(newGraph);
     })
+
+    loadJSON(f.data, graph.loadJson);
+    // JSON not loaded yet
 }

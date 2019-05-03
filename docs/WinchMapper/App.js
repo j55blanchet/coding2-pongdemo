@@ -11,7 +11,7 @@ let winchMapImg
 let mapCreator;
 let mapSearcher;
 
-function loadGraph(g) {
+function switchToGraph(g) {
     graph = g;
     mapCreator = new MapCreator(g);
     mapSearcher = new MapSearcher(g);
@@ -31,7 +31,7 @@ function preload() {
 
     let g = new Graph();
     g.loadJson(MAP_DEFAULT_JSON);
-    loadGraph(g);
+    switchToGraph(g);
 }
 
 function setup() {
