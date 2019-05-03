@@ -41,6 +41,5 @@ function loadVertexData(f) {
         switchToGraph(newGraph);
     })
 
-    loadJSON(f.data, graph.loadJson);
     // JSON not loaded yet
 }
